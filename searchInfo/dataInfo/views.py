@@ -55,4 +55,4 @@ def registrationView(request):
     
     context = {"form": formR}
 
-    return render(request, "login.html", context)
+    return render(request, "registration.html", context)
