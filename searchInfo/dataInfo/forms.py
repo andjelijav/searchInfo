@@ -1,0 +1,8 @@
+from django import forms
+
+#@breaf login form.
+#@param forms.Form > Base class for form.
+class LoginForm(forms.Form):
+    your_username = forms.CharField(label="Your username", max_length=100)
+
+    your_password=forms.PasswordInput()
