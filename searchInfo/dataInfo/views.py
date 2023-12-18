@@ -23,6 +23,7 @@ def loginView(request):
              #...
              #redirect to a new URL:
             return HttpResponseRedirect("")
+            #print()
 
     # if a GET (or any other method) we'll create a blank form
     else:
