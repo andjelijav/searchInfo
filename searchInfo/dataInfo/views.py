@@ -15,9 +15,9 @@ def home(request):
 
 def loginView(request):
     
-    if request.method == "GET":
+    if request.method == "POST":
          #create a form instance and populate it with data from the request:
-        form = LoginForm(request.GET)
+        form = LoginForm(request.POST)
          #check whether it's valid:
         if form.is_valid():
              #process the data in form.cleaned_data as required

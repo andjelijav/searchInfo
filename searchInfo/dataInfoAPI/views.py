@@ -47,11 +47,11 @@ def signup_view(request):
 @csrf_exempt
 def create_user_view(request):
     
-    username=request.POST.get('username')
+    username=request.POST.get('email')
     password=request.POST.get('password')
-    user=UserManager.create_user(username,password)
-    #serializer=UserSerializer(user)
+    user=User.objects.create_user(username, password)
+    serializer=UserSerializer(user)
 
     
 
-    return Response("aaaaaaaaaaaaaaa", status=status.HTTP_201_CREATED)
+    return Response(serializer.data, status=status.HTTP_201_CREATED)

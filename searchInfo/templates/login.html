@@ -1,8 +1,9 @@
 {% extends 'main.html' %}
+{% load rest_framework %}
 
 
 {% block content %}
-<form role="form" method="get">
+<form action="{% url 'create' %}"  method="POST">
     
     {{ form }}
     

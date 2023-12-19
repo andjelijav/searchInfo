@@ -4,9 +4,9 @@ from django import forms
 #@param forms.Form > Base class for form.
 class LoginForm(forms.Form):
 
-    your_username = forms.CharField(label="Your username", max_length=50)
+    email = forms.CharField(label="email ", max_length=50)
     
-    your_password=forms.CharField(label="Your password", max_length=50 )
+    password=forms.CharField(label="password", max_length=50 )
 
 #@breaf registration form
 #@param forms.Form > Base class for form.

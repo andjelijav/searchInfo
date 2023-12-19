@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "dataInfo.apps.DatainfoConfig",
     'bootstrap5',
     'dataInfoAPI',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
