@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "dataInfo.apps.DatainfoConfig",
     'bootstrap5',
+    'dataInfoAPI',
 ]
 
 MIDDLEWARE = [
@@ -94,6 +95,7 @@ DATABASES = {
         }
 }
 
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

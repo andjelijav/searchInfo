@@ -3,22 +3,30 @@
 {% block content %}
 <form class="row g-3">
     <div class="col-md-6">
-      <label for="inputEmail4" class="form-label">Email</label>
-      {{ form.your_email }}
+      <label for="inputName4" class="form-label">Name</label>
+      {{ form.your_name }}
     </div>
     <div class="col-md-6">
-      <label for="inputUsername4" class="form-label">Username</label>
+      <label for="inputLastName4" class="form-label">Lastname</label>
+      {{ form.your_last_name }}
+    </div>
+    <div class="col-md-12">
+      <label for="inputLastName4" class="form-label">Username</label>
       {{ form.your_username }}
     </div>
     <div class="col-12">
-      <label for="inputPassword" class="form-label">Password</label>
+      <label for="inputEmail" class="form-label">Email</label>
+      {{ form.your_email }}
+    </div>
+    <div class="col-12">
+      <label for="inputPassword" class="form-label">Password </label>
       {{ form.your_password }}
     </div>
     <div class="col-12">
-      <label for="inputPassword2" class="form-label">Password conformation </label>
-      {{ form.password_conformation }}
+      <label for="inputPasswordConfig" class="form-label">Password config </label>
+      {{ form.password_configuration }}
     </div>
-    
+
     <div class="col-md-4">
       <label for="inputState" class="form-label">Pol</label>
       <select id="inputState" class="form-select">
