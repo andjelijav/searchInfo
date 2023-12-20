@@ -41,9 +41,13 @@ INSTALLED_APPS = [
     'bootstrap5',
     'dataInfoAPI',
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
+
+
+
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -51,7 +55,18 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
+AUTHENTICATION_BACKENDS = (
+        'django.contrib.auth.backends.ModelBackend',
+    )
 
 ROOT_URLCONF = "searchInfo.urls"
 
@@ -88,6 +103,12 @@ WSGI_APPLICATION = "searchInfo.wsgi.application"
 }
 '''
 
+DB_TABLES_CONFIG ={
+    'auth': {
+           "USER": "auth_user"
+    }
+}
+
 DATABASES = {
         'default': {
             'ENGINE': 'djongo',
@@ -97,6 +118,10 @@ DATABASES = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+
+AUTH_USER_MODEL = 'dataInfo.User'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -138,3 +163,5 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+

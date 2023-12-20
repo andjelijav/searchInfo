@@ -34,6 +34,12 @@ def loginView(request):
 
     return render(request, "login.html", context)
 
+#@breaf Home user page view render function
+#@param request
+def homeUserView(request):
+    
+    return render(request,'homeUser.html',{'name:': 'Aleksa'})
+
 #@breaf Registration page view render function
 #@param request
 def registrationView(request):
@@ -56,3 +62,4 @@ def registrationView(request):
     context = {"form": formR}
 
     return render(request, "registration.html", context)
+

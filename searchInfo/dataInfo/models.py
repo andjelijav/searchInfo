@@ -8,12 +8,14 @@ class Documents(models.Model):
     create_date=models.DateTimeField(auto_now=True)
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
-        if not email:
-            raise ValueError("The Email field must be set")
+    def create_user(self, email, password=None,first_name=None,last_name=None, **extra_fields):
+        #if not email:
+            #raise ValueError("The Email field must be set")
         email = self.normalize_email(email)
         user=self.model(email=email,**extra_fields)
         user.set_password(password)
+        user.first_name=first_name
+        user.last_name=last_name
         user.save(using=self._db)
         return user
     
@@ -21,6 +23,7 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser',True)
         return self.create_user(email, password, extra_fields)
+
     
 
 class User(AbstractBaseUser):
