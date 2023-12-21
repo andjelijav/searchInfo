@@ -1,7 +1,9 @@
 from djongo import models
-from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser,BaseUserManager,BaseManeger
 
 # Create your models here.
+
+
 class Documents(models.Model):
     name=models.CharField(max_length=50)
     extenesion=models.CharField(max_length=4)

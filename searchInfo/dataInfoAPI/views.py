@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.response import Response
 from rest_framework import status
 from dataInfo.models import User
@@ -10,10 +10,12 @@ from .serializers import UserSerializer
 from dataInfo.models import UserManager
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
+from rest_framework.renderers import TemplateHTMLRenderer
 
 # Create your views here.
 
-@api_view([ 'POST'])
+@api_view(['POST'])
+
 @csrf_exempt
 
 def login_view(request):
@@ -24,6 +26,11 @@ def login_view(request):
         token, created = Token.objects.get_or_create(user=user)
         login(request, user)
         serializer= UserSerializer(user)
+        #renderer_classes = [TemplateHTMLRenderer]
+        #request.session['_old_post'] = request.POST  
+        request.session['user'] = serializer.data 
+        
+
         return HttpResponseRedirect("http://127.0.0.1:8000/homeUser/")
         #return Response({
             #'token': token.key,
@@ -33,6 +40,14 @@ def login_view(request):
     
     else:
         return Response({'error': 'Invalid email or password'}, status= status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@renderer_classes([TemplateHTMLRenderer])
+def homeUser_view(request):
+    data=request.POST.get('user')
+    return render(request,'homeUser.html',{'user':data})
+
+
 
 
 
