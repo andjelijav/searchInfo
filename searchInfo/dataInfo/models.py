@@ -9,6 +9,8 @@ class DocumentManager(models.Manager):
         extenesion=extenesion,
         create_date=create_date,
         id_user=id_user_)
+
+        
         
         return document
     
@@ -18,13 +20,17 @@ class Documents(models.Model):
     name=models.CharField(max_length=50)
     extenesion=models.CharField(max_length=4)
     create_date=models.DateTimeField(auto_now=True)
-    id_user=models.CharField(max_length=30)
+    id_user=models.CharField(max_length=30, default='guest', unique=False)
     my_file=models.FileField(upload_to='./', default='.')
 
+    
+
+    objects = DocumentManager() 
+    
     def __str__(self):
         return self.name
     
-    objects = DocumentManager() 
+    
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None,first_name=None,last_name=None, **extra_fields):

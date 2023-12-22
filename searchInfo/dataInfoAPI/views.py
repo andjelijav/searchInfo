@@ -84,8 +84,7 @@ def create_user_view(request):
     last_name=request.POST.get('last_name')
     user=User.objects.create_user(email, password, first_name, last_name)
     serializer=UserSerializer(user)
-
-    
+   
 
     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -116,8 +115,11 @@ def upload(request):
         context['url'] = fs.url(name)
         user=request.session['user']
         print(user["id"])
-        document=Documents.objects.upload_document(uploaded_file.name, 'txt', datetime.date.today(), user["id"])
+        document=Documents.objects.upload_document(uploaded_file.name, 'txt', datetime.date.today(),str(user['id']))
+        request.data.update({"id_user": str(user['id'])})
         serializer=DocumentSerializer(data=request.data)
+        #print(serializer.data)
         if serializer.is_valid():
+            print(request.data)
             serializer.save()
     return render(request, 'uploadSuccess.html', context)

@@ -100,15 +100,14 @@ WSGI_APPLICATION = "searchInfo.wsgi.application"
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
-}
-'''
+}'''
+
 
 DB_TABLES_CONFIG ={
     'auth': {
            "USER": "auth_user"
     }
 }
-
 DATABASES = {
         'default': {
             'ENGINE': 'djongo',
