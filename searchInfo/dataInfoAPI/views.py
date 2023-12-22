@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
@@ -6,11 +6,14 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.response import Response
 from rest_framework import status
 from dataInfo.models import User
-from .serializers import UserSerializer
-from dataInfo.models import UserManager
+from .serializers import UserSerializer, DocumentSerializer
+from dataInfo.models import UserManager, Documents, DocumentManager
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.renderers import TemplateHTMLRenderer
+from dataInfo.forms import UploadFileForm
+from django.core.files.storage import FileSystemStorage
+import datetime
 
 # Create your views here.
 
@@ -85,3 +88,36 @@ def create_user_view(request):
     
 
     return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+@api_view(['POST'])
+@renderer_classes([TemplateHTMLRenderer])
+@csrf_exempt
+def uploadFile_view(request):
+    if request=='POST':
+        form=UploadFileForm(request.POST, request.FILES)
+        if form.is_valid:
+            form.save()
+            return redirect('homeUser')
+    else:
+        form=UploadFileForm()
+    data=request.POST.get('user')
+    return render(request,'uploadFile.html',{'data':data,'form':form})
+
+@api_view(['POST'])
+@renderer_classes([TemplateHTMLRenderer])
+@csrf_exempt
+def upload(request):
+    context = {}
+    if request.method == 'POST':
+        
+        uploaded_file = request.FILES['my_file']
+        fs = FileSystemStorage()
+        name = fs.save(uploaded_file.name, uploaded_file)
+        context['url'] = fs.url(name)
+        user=request.session['user']
+        print(user["id"])
+        document=Documents.objects.upload_document(uploaded_file.name, 'txt', datetime.date.today(), user["id"])
+        serializer=DocumentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+    return render(request, 'uploadSuccess.html', context)

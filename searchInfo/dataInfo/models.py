@@ -1,13 +1,30 @@
 from djongo import models
-from django.contrib.auth.models import AbstractBaseUser,BaseUserManager,BaseManeger
+from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
 
 # Create your models here.
-
+class DocumentManager(models.Manager):
+    def upload_document(self, name, extenesion,create_date, id_user_):
+        #print(id_user)
+        document=self.model(name=name,
+        extenesion=extenesion,
+        create_date=create_date,
+        id_user=id_user_)
+        
+        return document
+    
+    
 
 class Documents(models.Model):
     name=models.CharField(max_length=50)
     extenesion=models.CharField(max_length=4)
     create_date=models.DateTimeField(auto_now=True)
+    id_user=models.CharField(max_length=30)
+    my_file=models.FileField(upload_to='./', default='.')
+
+    def __str__(self):
+        return self.name
+    
+    objects = DocumentManager() 
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None,first_name=None,last_name=None, **extra_fields):
