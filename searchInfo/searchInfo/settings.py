@@ -111,7 +111,7 @@ DB_TABLES_CONFIG ={
 DATABASES = {
         'default': {
             'ENGINE': 'djongo',
-            'NAME': 'Search_Info',
+            'NAME': 'Search_Info2',
             'ENFORCE_SCHEMA': False, 
         }
 }

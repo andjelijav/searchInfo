@@ -21,7 +21,8 @@ class Documents(models.Model):
     extenesion=models.CharField(max_length=4)
     create_date=models.DateTimeField(auto_now=True)
     id_user=models.CharField(max_length=30, default='guest', unique=False)
-    my_file=models.FileField(upload_to='./', default='.')
+    my_file=models.FileField(upload_to='./dokumenti', default='.')
+    url=models.CharField(max_length=100)
 
     
 

@@ -32,9 +32,11 @@ def login_view(request):
         #renderer_classes = [TemplateHTMLRenderer]
         #request.session['_old_post'] = request.POST  
         request.session['user'] = serializer.data 
-        
+        if serializer.data['is_staff'] is True:
+            return redirect('adminPage')
+               
 
-        return HttpResponseRedirect("http://127.0.0.1:8000/homeUser/")
+        return redirect("homeUser")
         #return Response({
             #'token': token.key,
             #'user_id': user.id,
@@ -43,12 +45,26 @@ def login_view(request):
     
     else:
         return Response({'error': 'Invalid email or password'}, status= status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['GET'])
+@renderer_classes([TemplateHTMLRenderer])
+@csrf_exempt
+def adminUser_view(request):
+    user=request.session['user']
+    users=User.objects.all()
+    user_serializer=UserSerializer(users, many=True)
+    print(user_serializer.data)
+    return render(request,'adminUser.html',{'users':user_serializer.data})
 
-@api_view(['POST'])
+
+@api_view(['GET'])
 @renderer_classes([TemplateHTMLRenderer])
 def homeUser_view(request):
-    data=request.POST.get('user')
-    return render(request,'homeUser.html',{'user':data})
+    data=request.session['user']    
+    documents=Documents.objects.filter(id_user=data['id'])
+    doc_serializer=DocumentSerializer(documents, many=True)
+    print(doc_serializer.data)
+    return render(request,'homeUser.html',{'user':data, 'documents':doc_serializer.data})
 
 
 
@@ -113,10 +129,12 @@ def upload(request):
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
         context['url'] = fs.url(name)
+
         user=request.session['user']
         print(user["id"])
         document=Documents.objects.upload_document(uploaded_file.name, 'txt', datetime.date.today(),str(user['id']))
-        request.data.update({"id_user": str(user['id'])})
+        request.data.update({"id_user": str(user['id']), "url":context['url']})
+        print(context['url'])
         serializer=DocumentSerializer(data=request.data)
         #print(serializer.data)
         if serializer.is_valid():
