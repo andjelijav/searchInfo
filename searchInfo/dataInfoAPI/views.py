@@ -13,6 +13,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.renderers import TemplateHTMLRenderer
 from dataInfo.forms import UploadFileForm
 from django.core.files.storage import FileSystemStorage
+from django.db.models import Q
 
 import datetime
 
@@ -144,3 +145,14 @@ def upload(request):
             print(request.data)
             serializer.save()
     return render(request, 'uploadSuccess.html', context)
+
+
+@api_view(['POST'])
+@csrf_exempt
+def shered_view(request):
+    user=request.session['user']    
+    users=User.objects.exclude(id=user['id'])
+    documents=Documents.objects.filter(id_user=user['id'])
+    doc_serializer=DocumentSerializer(documents, many=True)
+    user_serializer=UserSerializer(users, many=True)
+    return render(request, 'sheredDocuments.html', {'documents':doc_serializer.data, 'users':user_serializer.data})

@@ -9,9 +9,7 @@ class DocumentManager(models.Manager):
         extenesion=extenesion,
         create_date=create_date,
         id_user=id_user_)
-
-        
-        
+               
         return document
     
     
@@ -68,5 +66,21 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return self.email
-    
-    
+
+
+class ShereFilesManager(models.Manager):
+    def shereDoc(self, id_doc, name_doc, id_user_from, id_user_to):
+        file=self.model(id_doc=id_doc, name_doc=name_doc, id_user_from=id_user_from, id_user_to=id_user_to)
+        return file
+
+
+class SheredFiles(models.Model):
+    id_doc=models.CharField(max_length=30)
+    name_doc=models.CharField(max_length=30)
+    id_user_from=models.CharField(max_length=30)
+    id_user_to=models.CharField(max_length=30)
+
+    objects=ShereFilesManager()
+
+    def __str__(self):
+        return self.name_doc

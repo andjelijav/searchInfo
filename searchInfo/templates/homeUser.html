@@ -29,6 +29,15 @@
         
             
           </form>
+
+        <form action="{% url 'shered' %}",   method="POST">
+            {% csrf_token %} 
+            <button type="submit" class="btn btn-success">
+                Shere
+            </button>
+        </form>
+
+
           <form action="{% url 'logout' %}",   method="POST">
             {% csrf_token %} 
             <button type="submit" class="btn btn-success">

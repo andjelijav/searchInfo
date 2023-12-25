@@ -10,6 +10,7 @@ urlpatterns = [
     path('api/uploadSuccess', views.upload, name='uploadSuccess'),
     path('api/adminPage', views.adminUser_view, name='adminPage'),
     path('api/homeUser', views.homeUser_view, name='homeUser'),
+    path('api/sheredDocuments', views.shered_view, name='shered'),
     
     
 ]

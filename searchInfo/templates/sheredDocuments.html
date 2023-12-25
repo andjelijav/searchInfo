@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title> Shered documents</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>    
+    {% csrf_token %}
+    <ul> Documents:
+        {% for document in documents %}
+        <li> {{document.name}} <input type="checkbox" name="Shere"> </li>
+        {% endfor %}
+    </ul>
+    <ul>
+        Users:
+        {% for user in users%}
+        <li> {{user.first_name}} <input type="checkbox" name="Shere with"> </li>
+    
+        {% endfor %}
+    </ul>
+    <button type="submit" class="btn btn-success">
+        Shere
+        
+    </button>     
+      
+</body>
+</html>
