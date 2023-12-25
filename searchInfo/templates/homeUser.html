@@ -26,8 +26,15 @@
               <button type="submit" class="btn btn-success">
                   Upload file
                 </button>
+        
             
           </form>
+          <form action="{% url 'logout' %}",   method="POST">
+            {% csrf_token %} 
+            <button type="submit" class="btn btn-success">
+                Logout
+            </button>
+        </form>
         
     </div>
 

@@ -13,6 +13,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.renderers import TemplateHTMLRenderer
 from dataInfo.forms import UploadFileForm
 from django.core.files.storage import FileSystemStorage
+
 import datetime
 
 # Create your views here.
@@ -76,7 +77,9 @@ def homeUser_view(request):
 @csrf_exempt
 def logout_view(request):
     logout(request)
-    return Response ({'success': 'Logged out successfully'})
+    request.session['user']= None
+    #request.user.auth_token.delete()
+    return redirect ('home')
 
 
 @api_view(['POST'])

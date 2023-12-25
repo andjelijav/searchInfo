@@ -9,4 +9,4 @@ class UserSerializer(serializers.ModelSerializer):
 class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model=Documents
-        fields=('id','name', 'extenesion','create_date','id_user', 'my_file')
+        fields=('id','name', 'extenesion','create_date','id_user', 'my_file', 'url')
