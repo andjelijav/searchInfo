@@ -15,6 +15,8 @@ from dataInfo.forms import UploadFileForm
 from django.core.files.storage import FileSystemStorage
 from django.db.models import Q
 from .sclient import SClient
+from .searchClient import SearchClient
+
 
 import datetime
 
@@ -132,11 +134,25 @@ def upload(request):
         
         uploaded_file = request.FILES['my_file']
         fs = FileSystemStorage()
-        #name = fs.save(uploaded_file.name, uploaded_file)
+        name = fs.save(uploaded_file.name, uploaded_file)
         context['url'] = uploaded_file.name
         seafile_client=SClient('http://127.0.0.1:8003', 'me@example.com', 'asecret')
+
+        file=seafile_client.UploadFile('8a416721-7359-4d7b-9607-bb443d6a892e', uploaded_file.name)
+
+        sf=seafile_client.GetClientContent('8a416721-7359-4d7b-9607-bb443d6a892e', '/root/'+uploaded_file.name)
+        lista = str(sf)
+        client=SearchClient('localhost', 9200, 'admin', 'admin')
+
+        document = {
+        'title': uploaded_file.name,
+        'content':lista,
         
-        seafile_client.UploadFile('22d2f9bd-2eb4-4699-aa78-bd39c00cbb0f', uploaded_file.name)
+        }
+        id ='7'
+
+        result= client.CreateIndex('proba-index', document, id)
+        print(result)
 
         user=request.session['user']
         print(user["id"])

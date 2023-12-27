@@ -19,3 +19,10 @@ class SClient:
 	
         file = seafdir.upload_local_file(document)
         return file
+    
+    def GetClientContent(self, repoID, file_name):
+        repo = self.client.repos.get_repo(repoID)
+        seaffile = repo.get_file(file_name)
+	
+        content = seaffile.get_content()
+        return content
